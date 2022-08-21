@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@pinata/sdk": "^1.1.25",
+    "nft.storage": "^7.0.0",
     "body-parser": "^1.20.0",
     "canvas": "^2.9.1",
     "dotenv": "^16.0.0",
