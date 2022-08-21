@@ -1,20 +1,14 @@
 const { Buffer } = require('buffer');
-const { Readable } = require('stream');
-const { v4: uuidv4 } = require('uuid');
-const pinataSDK = require('@pinata/sdk');
-
-// upload to pinata
+const { NFTStorage, Blob } = require('nft.storage');
+// upload to nft storage
 module.exports = async function (imageDataUrl) {
-  const pinata = pinataSDK(
-    process.env.PINATA_API_KEY,
-    process.env.PINATA_SECRET_API_KEY
-  );
-  const imageData = imageDataUrl.replace(/^data:image\/png;base64,/, '');
-  const imageBuffer = Buffer.from(imageData, 'base64');
-  const stream = Readable.from(imageBuffer);
-  stream.path = `${uuidv4()}.png`;
+  const nftStorage = new NFTStorage({
+    token: process.env.NFT_STORAGE_TOKEN
+  });
+  const imageData = imageDataUrl.replace(/^data:image\/png;base64,/, "");
+  const imageBuffer = Buffer.from(imageData, "base64");
+  const someData = new Blob([imageBuffer]);
+  const cid = await nftStorage.storeBlob(someData);
 
-  const result = await pinata.pinFileToIPFS(stream, {});
-
-  return 'ipfs://' + result.IpfsHash;
+  return "ipfs://" + cid;
 };
