@@ -7,12 +7,7 @@ const uploadToIPFS = require('./utils/uploadToIPFS');
 const generateSignature = require('./utils/generateSignature');
 
 dotenv.config();
-if (
-  !process.env.SIGNER_WALLET_PRIVATE_KEY ||
-  !process.env.PINATA_API_KEY ||
-  !process.env.PINATA_SECRET_API_KEY ||
-  !process.env.INFURA_PROJECT_ID
-) {
+if (!process.env.SIGNER_WALLET_PRIVATE_KEY || !process.env.INFURA_PROJECT_ID) {
   console.error(
     'Please set SIGNER_WALLET_PRIVATE_KEY and INFURA_PROJECT_ID environment variables.'
   );
