@@ -25,6 +25,7 @@ app.post('/mint', async (req, res) => {
   // TODO add request JSON validation
   const pfp = req.body.pfp;
   const enableLaser = req.body.enableLaser;
+  console.log('Received a new request with pfp: ', pfp);
 
   try {
     const imageDataUrl = await createImage(pfp, enableLaser);
