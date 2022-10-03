@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello World!!!');
 });
 
 app.post('/mint', async (req, res) => {
