@@ -37,4 +37,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.HOST_PORT }}
           script: |
-            ${{ secrets.DEPLOYMENT_SHELL }} $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            ${{ secrets.DEPLOYMENT_SHELL }} ${{ steps.login-ecr.outputs.registry }}/mfnft-backend:${{ github.sha }}
