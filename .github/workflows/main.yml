@@ -29,7 +29,7 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-      - name: Deploy to dokku
+      - name: Deploy to production
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -37,6 +37,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.HOST_PORT }}
           script: |
-            aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_REGISTRY}}
-            docker pull ${{ secrets.DOCKER_REGISTRY}}/mfnft-backend:${{ github.sha }}
-            dokku git:from-image mfnft-backend ${{ secrets.DOCKER_REGISTRY}}/mfnft-backend:${{ github.sha }}
+            ${{ secrets.DEPLOYMENT_SHELL }} $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
