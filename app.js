@@ -28,9 +28,15 @@ app.post('/mint', async (req, res) => {
   console.log('Received a new request with pfp: ', pfp);
 
   try {
+    console.log('Creating image...');
     const imageDataUrl = await createImage(pfp, enableLaser);
+    console.log('Image created: ');
+
     const imageIPFSURI = await uploadToIPFS(imageDataUrl);
+    console.log('Image uploaded to IPFS: ', imageIPFSURI);
+
     const signature = await generateSignature(imageIPFSURI);
+    console.log('Signature generated: ', signature);
 
     res.json({
       success: true,
